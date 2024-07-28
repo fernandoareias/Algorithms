@@ -4,7 +4,7 @@ using BenchmarkDotNet.Attributes;
 namespace Algorithm;
 
 [MemoryDiagnoser]
-public class BloomFilter<T> where T : class
+public class BloomFilter<T> where T : notnull
 {
     private readonly int _hashFunctionCount;
     private readonly BitArray _hashBits;

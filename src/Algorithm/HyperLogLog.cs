@@ -46,19 +46,35 @@ public class HyperLogLog<T> where T : notnull
     /// <param name="item">O item a ser adicionado.</param>
     public void Add(T item)
     {
-        var x = MurmurHash3.Hash32(item.GetHashCode());
-        var j = x >> (32 - P);
-        var w = (x << P) | (1 << (P - 1));
-        var rho = 1;
+        // Obtém o valor hash do item
+        var x = (uint)MurmurHash3.Hash32(item.GetHashCode());
 
-        while ((w & 0x80000000) == 0)
+        // Calcula o índice do registro (j) com base nos bits mais significativos
+        // P bits mais significativos determinam o índice do registro
+        var j = (int)(x >> (32 - P)); 
+
+        // Calcula w como a parte relevante do hash para encontrar rho
+        // Mantém apenas os bits relevantes para rho
+        var w = x & ((1U << P) - 1); 
+
+        // Calcula rho, a posição do bit 1 mais à esquerda
+        var rho = 1;
+        while ((w & 1) == 0)
         {
             rho++;
-            w <<= 1;
+            w >>= 1;
         }
 
+        // Verifica se o índice está dentro dos limites
+        if (j >= registers.Length || j < 0)
+        {
+            throw new IndexOutOfRangeException($"Índice de registro calculado ({j}) está fora dos limites.");
+        }
+
+        // Atualiza o registro apropriado com o valor máximo
         registers[j] = Math.Max(registers[j], rho);
     }
+
 
     /// <summary>
     /// Determina a cardinalidade aproximada do HyperLogLog.
