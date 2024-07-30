@@ -66,4 +66,18 @@ public class Stack<T> where T : notnull
         _size = 0;
     }
 
+    public virtual T?[] ToArray()
+    {
+        if (_size == 0)
+            return Array.Empty<T>();
+ 
+        var objArray = new T[_size];
+        int i = 0;
+        while (i < _size)
+        {
+            objArray[i] = _array[_size - i - 1];
+            i++;
+        }
+        return objArray;
+    }
 }
