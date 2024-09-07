@@ -1,40 +1,29 @@
 using System;
-
-// Enumeração para representar as cores dos nós
+ 
 public enum Color { Red, Black }
-
-// Classe que define um nó da árvore rubro-negra
+ 
 public class RedBlackTreeNode<T> where T : IComparable
-{
-    // Dados armazenados no nó
+{ 
     public T Data { get; set; }
 
-    // Referência para o filho esquerdo
     public RedBlackTreeNode<T> Left { get; set; }
 
-    // Referência para o filho direito
     public RedBlackTreeNode<T> Right { get; set; }
 
-    // Referência para o nó pai
     public RedBlackTreeNode<T> Parent { get; set; }
 
-    // Cor do nó (vermelho ou preto)
     public Color RedBlackTreeNodeColor { get; set; }
 
-    // Construtor que inicializa o nó com o dado fornecido
     public RedBlackTreeNode(T data)
     {
         Data = data;
-        RedBlackTreeNodeColor = Color.Red; // Novos nós são sempre vermelhos inicialmente
+        RedBlackTreeNodeColor = Color.Red; 
     }
 }
-// Classe que define a árvore rubro-negra
 public class RedBlackTree<T> where T : IComparable
 {
-    // Raiz da árvore
     private RedBlackTreeNode<T> root;
 
-    // Método para inserir um novo dado na árvore
     public void Insert(T data)
     {
         RedBlackTreeNode<T> newNode = new RedBlackTreeNode<T>(data);
@@ -181,7 +170,6 @@ public class RedBlackTree<T> where T : IComparable
         node.Parent = temp;
     }
 
-    // Método para realizar a travessia em ordem da árvore
     public void InOrderTraversal(Action<RedBlackTreeNode<T>> action)
     {
         InOrderTraversal(root, action);

@@ -130,5 +130,58 @@ namespace LinkedListTests
             Assert.Null(list.Root.Next);
             Assert.Equal(1u, list.Count);
         }
+
+
+        [Fact]
+        public void DetectCircleRefUsingHashmap()
+        {
+            var list = new Algorithm.LinkedList<int>();
+            list.AddHead(1);
+            list.AddHead(2);
+            list.AddHead(3);
+
+            list.Root.Next.Next.Next = list.Root;
+
+            var dic = new Dictionary<Algorithm.LinkedListNode<int>, int>();
+
+            var current = list.Root;
+
+            bool flgContainsCircle = false;
+            
+            while (current != null)
+            {
+                if (dic.ContainsKey(current))
+                {
+                    flgContainsCircle = true;
+                    break;
+                }
+                else
+                {
+                    dic.Add(current, 1);
+                }
+    
+                current = current?.Next;
+            }
+
+            Assert.True(flgContainsCircle);
+        }
+
+
+        [Fact]
+        public void SearchCirclesWhiteFloydAlgorithm()
+        {
+            var list = new Algorithm.LinkedList<int>();
+            list.AddHead(1);
+            list.AddHead(2);
+            list.AddHead(3);
+
+            list.Root.Next.Next.Next = list.Root;
+
+            var dic = new Dictionary<Algorithm.LinkedListNode<int>, int>();
+
+            var current = list.Root;
+            
+            
+        }
     }
 }
