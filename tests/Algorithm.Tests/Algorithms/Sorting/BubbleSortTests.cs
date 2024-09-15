@@ -58,4 +58,49 @@ public class BubbleSortTests
         
         Assert.Equal(expected, result);
     }
+    
+    [Fact]
+    public void SortWithHadChangesSortsIntArrayCorrectly()
+    {
+        var input = new int[] { 5, 3, 8, 1, 2 };
+        var expected = new int[] { 1, 2, 3, 5, 8 };
+
+        var result = BubbleSort.SortWithHadChanges(input);
+
+        Assert.Equal(expected, result);
+    }
+
+    [Fact]
+    public void SortWithHadChangesSortsStringArrayCorrectly()
+    {
+        var input = new string[] { "orange", "apple", "banana", "grape" };
+        var expected = new string[] { "apple", "banana", "grape", "orange" };
+
+        var result = BubbleSort.SortWithHadChanges(input);
+
+        Assert.Equal(expected, result);
+    }
+
+    [Fact]
+    public void SortWithHadChangesEmptyArrayReturnsEmpty()
+    {
+        var input = new int[] { };
+        var expected = new int[] { };
+
+        var result = BubbleSort.SortWithHadChanges(input);
+
+        Assert.Equal(expected, result);
+    }
+
+    [Fact]
+    public void SortWithHadChangesArrayAlreadySortedReturnsSameArray()
+    {
+        var input = new int[] { 1, 2, 3, 4, 5 };
+        var expected = new int[] { 1, 2, 3, 4, 5 };
+
+        var result = BubbleSort.SortWithHadChanges(input);
+
+        Assert.Equal(expected, result);
+    }
+ 
 }

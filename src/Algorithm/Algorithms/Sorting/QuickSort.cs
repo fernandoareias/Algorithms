@@ -112,4 +112,57 @@ public static class QuickSort
         if (arr[a].CompareTo(arr[b]) > 0) (a, b) = (b, a); // a <= b novamente
         return arr[b]; // Mediana de a, b, c
     }
+    
+    
+    public static void SortDualPivot<T>(T[] arr) where T : IComparable<T>
+        => SortDualPivot(arr, 0, arr.Length - 1);
+
+    public static void SortDualPivot<T>(T[] arr, int left, int right) where T : IComparable<T>
+    {
+        if (left >= right) return;
+
+        if (arr[left].CompareTo(arr[right]) > 0)
+            (arr[left], arr[right]) = (arr[right], arr[left]);  
+
+        T pivot1 = arr[left];
+        T pivot2 = arr[right];
+
+        int l = left + 1;
+        int g = right - 1;
+        int k = l;
+
+        while (k <= g)
+        {
+            if (arr[k].CompareTo(pivot1) < 0)
+            {
+                (arr[k], arr[l]) = (arr[l], arr[k]);
+                l++;
+            }
+            else if (arr[k].CompareTo(pivot2) > 0)
+            {
+                while (arr[g].CompareTo(pivot2) > 0 && k < g)
+                {
+                    g--;
+                }
+                (arr[k], arr[g]) = (arr[g], arr[k]);
+                g--;
+                if (arr[k].CompareTo(pivot1) < 0)
+                {
+                    (arr[k], arr[l]) = (arr[l], arr[k]);
+                    l++;
+                }
+            }
+            k++;
+        }
+
+        l--;
+        g++;
+
+        (arr[left], arr[l]) = (arr[l], arr[left]);
+        (arr[right], arr[g]) = (arr[g], arr[right]);
+
+        SortDualPivot(arr, left, l - 1);
+        SortDualPivot(arr, l + 1, g - 1);
+        SortDualPivot(arr, g + 1, right);
+    }
 }
